@@ -1,8 +1,8 @@
 ---
-title: John Doe
-email: johndoe@email.com
+title: Zakaria EL BAZI
+email: zakaria@elbazi.co
 image: "/images/avatar.png"
-description: this is meta description
+description: 
 social:
   - name: github
     icon: fa-brands fa-github
@@ -11,10 +11,6 @@ social:
   - name: twitter
     icon: fa-brands fa-twitter
     link: https://twitter.com
-
-  - name: linkedin
-    icon: fa-brands fa-linkedin
-    link: https://linkedin.com
 ---
 
-lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostr navigation et dolore magna aliqua.
+maintainer of the AWS Morocco blog.
