@@ -20,7 +20,7 @@ jobs:
       
       - name: Install Python dependencies
         run: |
-          pip install -r .githu/scripts/requirements.txt
+          pip install -r .github/scripts/requirements.txt
       
       - name: Run the RSS feed parser script
         run: python .github/scripts/feed_parser.py
