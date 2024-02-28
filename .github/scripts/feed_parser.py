@@ -62,6 +62,9 @@ def main():
         metadata = f"""
 ---
 title: "{entry.title}"
+image: "/images/image-placeholder.png"
+categories: ["AWS", "Terraform"]
+tags: ["AWS", "Terraform"]
 date: {datetime.now(pytz.timezone('UTC')).strftime('%Y-%m-%dT%H:%M:%SZ')}
 author: "{entry.get('dc:creator', 'Unknown Author')}"
 ---
