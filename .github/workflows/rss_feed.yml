@@ -31,6 +31,6 @@ jobs:
           commit-message: Update markdown files from RSS feed
           title: '[Automated] Update markdown files from RSS feed'
           body: 'This PR is auto-generated to update the markdown files from the RSS feed.'
-          branch: update-markdown-from-rss-$(date +%Y%m%d%H%M%S)
+          branch: "awsmorocco-rss-${{ github.run_id }}"
           delete-branch: true
           signoff: false
