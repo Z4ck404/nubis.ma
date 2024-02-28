@@ -43,7 +43,7 @@ jobs:
         run: |
           git push --force-with-lease origin "awsmorocco-rss-${{ github.run_id }}"
         env:
-          GITHUB_TOKEN: ${{ secrets.MY_PAT }}
+          GITHUB_TOKEN: ${{ secrets.CI_PAT }}
       
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3
