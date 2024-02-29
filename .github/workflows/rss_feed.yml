@@ -53,4 +53,3 @@ jobs:
           title: '[Automated] Update markdown files from RSS feed'
           body: 'This PR is auto-generated to update the markdown files from the RSS feed.'
           branch: "awsmorocco-rss-${{ github.run_id }}"
-          base: "main"
