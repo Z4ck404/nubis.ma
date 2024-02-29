@@ -34,13 +34,7 @@ jobs:
         run: |
           git add .
           git commit -m "Update markdown files from RSS feed" -a || echo "No changes to commit"
-      
-      - name: Push changes using PAT
-        run: |
-          git push --force-with-lease origin "awsmorocco-rss-${{ github.run_id }}"
-        env:
-          GITHUB_TOKEN: ${{ secrets.CI_PAT }}
-      
+            
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3
         with:
