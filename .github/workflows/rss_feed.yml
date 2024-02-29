@@ -27,8 +27,8 @@ jobs:
       
       - name: Configure git
         run: |
-          git config --global user.name 'AwsMorocco'
-          git config --global user.email 'atlas@awsmorocco.com'
+          git config --global user.name 'Z4ck404'
+          git config --global user.email 'zakaria@elbazi.co'
       
       - name: Create and switch to a new branch
         run: |
