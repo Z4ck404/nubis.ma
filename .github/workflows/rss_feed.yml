@@ -48,7 +48,7 @@ jobs:
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3
         with:
-          token: ${{ secrets.MY_PAT }}
+          token: ${{ secrets.CI_PAT }}
           commit-message: Update markdown files from RSS feed
           title: '[Automated] Update markdown files from RSS feed'
           body: 'This PR is auto-generated to update the markdown files from the RSS feed.'
