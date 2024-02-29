@@ -8,8 +8,8 @@ import pytz
 
 # Configuration
 RSS_FEED_URL = "https://awsmorocco.com/rss"
-IMAGES_DIR = "images"
-POSTS_DIR = "../../content/english/blog"
+IMAGES_DIR = "assets/images/medium"
+POSTS_DIR = "content/english/blog"
 
 def download_image(image_url):
     """Downloads an image and returns the local file path."""
