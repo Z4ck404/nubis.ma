@@ -20,17 +20,39 @@ jobs:
       
       - name: Install Python dependencies
         run: |
-          pip install -r requirements.txt
+          pip install -r .github/scripts/requirements.txt
       
       - name: Run the RSS feed parser script
         run: python .github/scripts/feed_parser.py
       
+      - name: Configure git
+        run: |
+          git config --global user.name 'Z4ck404'
+          git config --global user.email 'zakaria@elbazi.co'
+      
+      - name: Create and switch to a new branch
+        run: |
+          git checkout -b "awsmorocco-rss-${{ github.run_id }}"
+      
+      - name: Commit changes
+        run: |
+          git add .
+          git commit -m "Update markdown files from RSS feed" -a || echo "No changes to commit"
+      
+      - name: Push changes using PAT
+        run: |
+          git push --force-with-lease origin "awsmorocco-rss-${{ github.run_id }}"
+        env:
+          GITHUB_TOKEN: ${{ secrets.CI_PAT }}
+      
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3
         with:
+          token: ${{ secrets.CI_PAT }}
           commit-message: Update markdown files from RSS feed
           title: '[Automated] Update markdown files from RSS feed'
           body: 'This PR is auto-generated to update the markdown files from the RSS feed.'
-          branch: update-markdown-from-rss-$(date +%Y%m%d%H%M%S)
+          branch: "awsmorocco-rss-${{ github.run_id }}"
+          base: "main"
           delete-branch: true
           signoff: false
