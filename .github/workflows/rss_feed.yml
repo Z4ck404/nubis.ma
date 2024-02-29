@@ -27,10 +27,6 @@ jobs:
           git config --global user.name 'Z4ck404'
           git config --global user.email 'zakaria@elbazi.co'
       
-      - name: Create and switch to a new branch
-        run: |
-          git checkout -b "awsmorocco-rss-${{ github.run_id }}"
-
       - name: Run the RSS feed parser script
         run: python .github/scripts/feed_parser.py
       
