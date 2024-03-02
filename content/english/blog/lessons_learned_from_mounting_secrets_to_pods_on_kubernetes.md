@@ -1,7 +1,7 @@
 
 ---
 title: "Lessons Learned From Mounting Secrets to Pods on Kubernetes"
-image: "/images/image-placeholder.png"
+image: "/images/medium/1*xOrKvc_VTuI7V2S5zZkXxg.png"
 categories: ["AWS", "Terraform"]
 tags: ["AWS", "Terraform"]
 date: 2024-02-29T14:48:02Z

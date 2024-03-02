@@ -1,7 +1,8 @@
 
 ---
 title: "CSI Drivers (EBS, EFS, S3) on EKS And How To Use Them"
-image: "/images/image-placeholder.png"
+image: "/images/medium/1*xOrKvc_VTuI7V2S5zZkXxg.png"
+image: "/images/assets/medium/1*xOrKvc_VTuI7V2S5zZkXxg.png"
 categories: ["AWS", "Terraform"]
 tags: ["AWS", "Terraform"]
 date: 2024-02-29T14:48:03Z
