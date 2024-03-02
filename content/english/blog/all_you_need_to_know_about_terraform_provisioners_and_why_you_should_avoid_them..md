@@ -1,7 +1,7 @@
 
 ---
 title: "All you need to know about Terraform provisioners and why you should avoid them."
-image: "/images/image-placeholder.png"
+image: "/images/medium/1*xOrKvc_VTuI7V2S5zZkXxg.png"
 categories: ["AWS", "Terraform"]
 tags: ["AWS", "Terraform"]
 date: 2024-02-29T14:47:58Z

@@ -1,9 +1,9 @@
 #################### default parameters ################################
 # favicon module: https://github.com/gethugothemes/hugo-modules/tree/master/images#favicon-implementation
-favicon = "images/favicon.png"
+favicon = "images/nubis_favicon.png"
 # logo module: https://github.com/gethugothemes/hugo-modules/tree/master/images#logo-implementation
-logo = "images/awsmorocco_logo.png"
-logo_darkmode = "images/awsmorocco_logo.png"
+logo = "images/nubis_logo_black.png"
+logo_darkmode = "images/nubis_logo_white.png"
 # use `px` or `x` with logo_width, example: "100px".
 # Note: logo_width is not work with .svg file
 logo_width = "160px"
@@ -11,9 +11,9 @@ logo_height = "32px"
 # if logo_webp set false, will not generate WEBP version of logo | default is true
 logo_webp = true
 # logo text will only show when logo is missing.
-logo_text = "AwsMorocco"
+logo_text = "Nubis.ma"
 # navbar fixed to top
-navbar_fixed = true
+navbar_fixed = false
 # theme-mode
 theme_switcher = true
 theme_default = "system" # available options [light/dark/system]
@@ -95,7 +95,7 @@ map_marker = "images/marker.png"
 
 # Subscription
 [subscription]
-enable = false
+enable = true
 # mailchimp subsciption
 mailchimp_form_action = "https://gmail.us4.list-manage.com/subscribe/post?u=463ee871f45d2d93748e77cad&amp;id=a0a2c6d074" # replace this url with yours
 mailchimp_form_name = "b_463ee871f45d2d93748e77cad_a0a2c6d074"

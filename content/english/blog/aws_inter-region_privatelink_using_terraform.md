@@ -1,14 +1,14 @@
 
 ---
 title: "AWS Inter-Region PrivateLink using Terraform"
-image: "/images/image-placeholder.png"
+image: "/images/medium/1*Yzpuv03LmC_fnwPqYt9T5g.png"
 categories: ["AWS", "Terraform"]
 tags: ["AWS", "Terraform"]
 date: 2024-02-29T14:48:04Z
 author: "Unknown Author"
 ---
 
-![](/assets/images/medium/0*tGFRJlprmRQaeCuN)Photo by [Taylor
+![](/assets/images/medium/1*Yzpuv03LmC_fnwPqYt9T5g.png)Photo by [Taylor
 Vick](https://unsplash.com/@tvick?utm_source=medium&utm_medium=referral) on
 [Unsplash](https://unsplash.com?utm_source=medium&utm_medium=referral)
 
@@ -56,8 +56,7 @@ region PrivateLink
 **1 —** Create VPCs to emulate the Service provider, Service Provider Outpost
 and the Consumer VPC:
 
-    
-    
+```
     module "vpc_service_provider" {  
       source = "terraform-aws-modules/vpc/aws"  
       name   = "awsmorocco_service_provider_vpc"  
@@ -116,10 +115,11 @@ and the Consumer VPC:
         aws = aws.consumer  
       }  
     }
+```
 
 The providers configuration looks like this:
 
-    
+```
     
     provider "aws" {  
       alias  = "consumer"  
@@ -135,12 +135,12 @@ The providers configuration looks like this:
       alias  = "service_provider_outpost"  
       region = "us-west-2"  
     }
-
+```
 **2 —** Once the VPCs are created, enable the peering between the Service
 provider VPC and the Outpost PVC:
 
     
-    
+```
     resource "aws_vpc_peering_connection" "this" {  
       vpc_id      = module.vpc_service_provider_outpost.vpc_id  
       peer_vpc_id = module.vpc_service_provider.vpc_id  
@@ -187,12 +187,13 @@ provider VPC and the Outpost PVC:
       
       provider = aws.service_provider  
     }
+```
 
 **3 —** Once the VPCs are created and the peering is established, you can
 proceed and enable/create the PrivateLink setup between the Service Consumer
 VPC and the Service Provider VPC:
 
-    
+```    
     
     data "aws_caller_identity" "current" {}  
       
@@ -229,16 +230,13 @@ VPC and the Service Provider VPC:
       
       provider = aws.consumer  
     }
+````
 
-4 — Finally, deploy EC2 instances within the Service Provider VPCs, each
-running a straightforward Flask API. Register these instances as targets in
-the Network Load Balancer (NLB), [as elaborated in a prior article explaining
-the intricacies of PrivateLink](https://awsmorocco.com/how-does-aws-
-privatelink-works-faddc730ed73). Additionally, instantiate a public instance
-within the Consumer VPC and attempt to access the service — specifically, the
-Flask application — exposed by the deployed instances, following the
-guidelines outlined in [the aforementioned
-article](https://awsmorocco.com/how-does-aws-privatelink-works-faddc730ed73).
+4 — Finally, deploy EC2 instances within the Service Provider VPCs, each running a straightforward Flask API. 
+Register these instances as targets in the Network Load Balancer (NLB), [as elaborated in a prior article explaining the intricacies of PrivateLink](https://awsmorocco.com/how-does-aws-privatelink-works-faddc730ed73). 
+
+Additionally, instantiate a public instance within the Consumer VPC and attempt to access the service 
+— specifically, the Flask application — exposed by the deployed instances, following the guidelines outlined in [the aforementioned article](https://awsmorocco.com/how-does-aws-privatelink-works-faddc730ed73).
 
 #### The Benefits of this setup:
 
