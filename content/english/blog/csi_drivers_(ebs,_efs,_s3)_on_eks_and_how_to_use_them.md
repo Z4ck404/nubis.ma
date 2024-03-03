@@ -5,7 +5,7 @@ image: "/images/medium/0*_WvCpAlKQZOfRg0m.png"
 categories: ["AWS", "Terraform"]
 tags: ["AWS", "Terraform"]
 date: 2024-02-29T14:48:03Z
-author: "Unknown Author"
+author: "awsmorocco"
 ---
 
 ![](/assets/images/medium/0*_WvCpAlKQZOfRg0m)Photo by [frank
