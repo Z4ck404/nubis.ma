@@ -1,7 +1,7 @@
 ---
-title: Zakaria EL BAZI
-email: zakaria@elbazi.co
-image: "/images/avatar.png"
+title: AWS Morocco
+email: atlas@awsmorocco.com
+image: "/images/awsmorocco_logo.png"
 description: 
 social:
   - name: github
