@@ -32,17 +32,16 @@ There are 3 types of provisioners :
 Used to copy files or directories to the newly created resources and
 underneath it’s using ssh or winrm. Does the job of an scp.
 
-In this [article](https://awstip.com/i-deployed-my-static-website-with-
-kubernetes-on-azure-using-terraform-because-why-not-2cdfe8807ca4) I used this
-provisioner inside a null resource to copy my kubernetes configuration files
+In this [article](https://awstip.com/i-deployed-my-static-website-with-kubernetes-on-azure-using-terraform-because-why-not-2cdfe8807ca4) I used this provisioner inside a null resource to copy my kubernetes configuration files
 to a newly created VM where I installed minikube. You can define it inside the
 vm resources as well but i prefer to use them in a separate module as they
 shouldn't be mixed with the resources objects. And this is how I did it :
 
 <https://medium.com/media/bcf1a10ce5b77ae8377ca50bc4b9ef39/href>
 
-**Note that** you will need to add the ssh connection details since it’s using
-it behind the scenes.
+{{< notice "note" >}}
+you will need to add the ssh connection details since it’s using it behind the scenes.
+{{< /notice >}}
 
 #### remote-exec Provisioner:
 
@@ -56,15 +55,17 @@ behavior from the real terraform behavior.
 
 <https://medium.com/media/47dd8e18232805592d498c79e67bc679/href>
 
-> **Note that** you can not pass any arguments to the script or command, so
-> the best way is to use file provisioner to copy the files to the resources
-> and then invoke them with the remote-exec provisioner like I did above for
-> my script that installs minikube on the azure-vm.
+{{< notice "note" >}}
+you can not pass any arguments to the script or command, so
+the best way is to use file provisioner to copy the files to the resources
+and then invoke them with the remote-exec provisioner like I did above for
+my script that installs minikube on the azure-vm.
+{{< /notice >}}
 
-> **An other thing** to pay attention to is that by default, provisioners that
-> fail will also cause the Terraform apply to fail. To avoid that, the
-> [**on_failure**](https://www.terraform.io/language/resources/provisioners/syntax#failure-
-> behavior)**** can be used.
+{{< notice " another note" >}}
+to pay attention to is that by default, provisioners that fail will also cause the Terraform apply to fail. To avoid that, the
+[**on_failure**](https://www.terraform.io/language/resources/provisioners/syntax#failure-behavior)**** can be used.
+{{< /notice >}}
 
 <https://medium.com/media/6417741b0dd6ce5a5b53a58fab23d042/href>
 
@@ -106,8 +107,7 @@ EL BAZI.](https://www.credly.com/badges/34394920-8cdf-47f8-a190-52ab447e3e0f)
 * * *
 
 [All you need to know about Terraform provisioners and why you should avoid
-them.](https://awsmorocco.com/all-you-need-to-know-about-terraform-
-provisioners-and-why-you-should-avoid-them-22b5ef8d2db2) was originally
+them.](https://awsmorocco.com/all-you-need-to-know-about-terraform-provisioners-and-why-you-should-avoid-them-22b5ef8d2db2) was originally
 published in [AWS Morocco](https://awsmorocco.com) on Medium, where people are
 continuing the conversation by highlighting and responding to this story.
 
