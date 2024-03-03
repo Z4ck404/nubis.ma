@@ -5,7 +5,7 @@ image: "/images/medium/1*Yzpuv03LmC_fnwPqYt9T5g.png"
 categories: ["AWS", "Terraform"]
 tags: ["AWS", "Terraform"]
 date: 2024-02-29T14:48:04Z
-author: "Unknown Author"
+author: "awsmorocco"
 ---
 
 ![](/assets/images/medium/1*Yzpuv03LmC_fnwPqYt9T5g.png)Photo by [Taylor
@@ -26,8 +26,9 @@ terraform-a0b8aabf084b) for a deep dive into AWS VPC peering).
 
 #### **How it works:**
 
-![](/assets/images/medium/1*5m6JrsNSOYEaALxgjr91vg.png) VPC Peering x
-PrivateLink
+![]() 
+
+{{< image src="images/medium/1*5m6JrsNSOYEaALxgjr91vg.png" position="center" command="fill" option="q100" class="img-fluid"  webp="false" >}}
 
 1 — The Service Provider VPC hangs out in region A (let’s say us-east-1). Now,
 the Service Consumer VPC wants a local interface VPC endpoint, but in a
@@ -51,12 +52,14 @@ them is a no-go for security or compliance reasons.
 ![](/assets/images/medium/1*ncCpQmXAT8nRq-b58dyBGw.png)Cross-account inter-
 region PrivateLink
 
+{{< image src="images/medium/1*ncCpQmXAT8nRq-b58dyBGw.png" position="center" command="fill" option="q100" class="img-fluid"  webp="false" >}}
+
 #### Let’s Set it Up:
 
 **1 —** Create VPCs to emulate the Service provider, Service Provider Outpost
 and the Consumer VPC:
 
-```
+```HCL
     module "vpc_service_provider" {  
       source = "terraform-aws-modules/vpc/aws"  
       name   = "awsmorocco_service_provider_vpc"  
@@ -119,7 +122,7 @@ and the Consumer VPC:
 
 The providers configuration looks like this:
 
-```
+``` HCL
     
     provider "aws" {  
       alias  = "consumer"  
@@ -140,7 +143,7 @@ The providers configuration looks like this:
 provider VPC and the Outpost PVC:
 
     
-```
+``` HCL
     resource "aws_vpc_peering_connection" "this" {  
       vpc_id      = module.vpc_service_provider_outpost.vpc_id  
       peer_vpc_id = module.vpc_service_provider.vpc_id  
@@ -193,7 +196,7 @@ provider VPC and the Outpost PVC:
 proceed and enable/create the PrivateLink setup between the Service Consumer
 VPC and the Service Provider VPC:
 
-```    
+``` HCL
     
     data "aws_caller_identity" "current" {}  
       
@@ -267,8 +270,6 @@ for scalability and local access without immediate service deployment.
 
 * * *
 
-[AWS Inter-Region PrivateLink using Terraform](https://awsmorocco.com/inter-
-region-aws-privatelink-337c5115fbb9) was originally published in [AWS
-Morocco](https://awsmorocco.com) on Medium, where people are continuing the
+[AWS Inter-Region PrivateLink using Terraform](https://awsmorocco.com/inter-region-aws-privatelink-337c5115fbb9) was originally published in [AWSMorocco](https://awsmorocco.com) on Medium, where people are continuing the
 conversation by highlighting and responding to this story.
 
