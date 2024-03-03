@@ -1,11 +1,11 @@
 
 ---
 title: "Enhancing Efficiency with KMS Cache in Amazon S3 Buckets"
-image: "/images/medium/1*xOrKvc_VTuI7V2S5zZkXxg.png"
-categories: ["AWS", "Terraform"]
-tags: ["AWS", "Terraform"]
+image: "/images/medium/0*EfX08QdTWODbITar.png"
+categories: ["AWS", "Storage", "Encryption"]
+tags: ["AWS", "Terraform", "KMS"]
 date: 2024-02-29T14:48:00Z
-author: "Unknown Author"
+author: "awsmorocco"
 ---
 
 In the realm of cloud computing and data storage, the integration of Amazon
@@ -65,9 +65,7 @@ organizations maximize efficiency and manage costs effectively.
 
 * * *
 
-[Enhancing Efficiency with KMS Cache in Amazon S3
-Buckets](https://awsmorocco.com/enhancing-efficiency-with-kms-cache-in-
-amazon-s3-buckets-bcba89b9204c) was originally published in [AWS
+>[Enhancing Efficiency with KMS Cache in Amazon S3 Buckets](https://awsmorocco.com/enhancing-efficiency-with-kms-cache-in-amazon-s3-buckets-bcba89b9204c) was originally published in [AWS
 Morocco](https://awsmorocco.com) on Medium, where people are continuing the
 conversation by highlighting and responding to this story.
 
