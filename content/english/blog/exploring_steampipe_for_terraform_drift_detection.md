@@ -1,22 +1,19 @@
 
 ---
 title: "Exploring Steampipe for Terraform Drift Detection"
-image: "/images/medium/1*xOrKvc_VTuI7V2S5zZkXxg.png"
+image: "/images/medium/1*4Ki5MyUXEDKNTt0p-v37zQ.png"
 categories: ["AWS", "Terraform"]
-tags: ["AWS", "Terraform"]
+tags: ["AWS", "Terraform","steampipe"]
 date: 2024-02-29T14:48:09Z
-author: "Unknown Author"
+author: "awsmorocco"
 ---
-
-![](/assets/images/medium/1*4Ki5MyUXEDKNTt0p-v37zQ.png)Zakaria x Dall-e 3
 
 In Terraform, drift detection helps spot any mismatches between the
 infrastructure you’ve outlined in your code and what’s actually out there
 running in your cloud accounts. This is super important for keeping your
 Infrastructure as Code (IaC) practices on point, making sure everything is
 consistent, efficient, and secure. [Steampipe, which is an open-source
-tool](https://medium.com/aws-morocco/get-to-know-steampipe-a-new-way-to-talk-
-to-aws-e946708017b4), takes this a step further by letting you run real-time
+tool](https://medium.com/aws-morocco/get-to-know-steampipe-a-new-way-to-talk-to-aws-e946708017b4), takes this a step further by letting you run real-time
 SQL queries on your infrastructure data. When you bring Steampipe into the
 mix, you get a clearer picture and more control over your setup, making it
 easier to keep your code and infrastructure in sync and strengthening your IaC
@@ -24,7 +21,6 @@ game.
 
 #### Understanding drift in Terraform
 
-![](/assets/images/medium/1*PjMM1TuTE-RZtwW3Ga83Lg.png)Zakaria x Dall-e 3
 
 Drift is essentially the divergence between the state of your infrastructure
 as described in your code and its actual, real-world condition.
@@ -49,24 +45,21 @@ drift as quickly as possible.
 
 The installation of Steampipe and the setup and usage of the AWS plugin have
 been covered in a previous article. You can refer to [this
-article](https://awsmorocco.com/get-to-know-steampipe-a-new-way-to-talk-to-
-aws-e946708017b4) for a detailed step-by-step guide on the same.
+article](https://awsmorocco.com/get-to-know-steampipe-a-new-way-to-talk-to-aws-e946708017b4) for a detailed step-by-step guide on the same.
 
-[Get to know Steampipe: A New Way to Talk to AWS!](https://awsmorocco.com/get-
-to-know-steampipe-a-new-way-to-talk-to-aws-e946708017b4)
+[Get to know Steampipe: A New Way to Talk to AWS!](https://awsmorocco.com/get-to-know-steampipe-a-new-way-to-talk-to-aws-e946708017b4)
 
 #### Configuration
 
   * Install the [Steampipe Terraform plugin](https://hub.steampipe.io/plugins/turbot/terraform):
-
     
-    
+    ```cmd
     steampipe plugin install terraform
+    ```
 
   * Once the terraform plugin is installed it should create a config file ~/.steampipe/config/aws.spc open the file and configure your terraform connection where you specify the state file(s) path(s). The state files can be in local or in remote back-end like s3:
 
-    
-    
+    ```cmd
     connection "terraform" {  
       plugin = "terraform"  
       
@@ -78,13 +71,14 @@ to-know-steampipe-a-new-way-to-talk-to-aws-e946708017b4)
         "s3::https://awsmorocco-terraform-states.s3.us-east-1.amazonaws.com/awsmorcco/network",  
       ]  
     }
+    ```
 
 #### Querying Infrastructure
 
   * Extract data for the desired resource from the Terraform state and save the output:
 
     
-    
+    ```cmd
     steampipe query "  
     SELECT  
       attributes_std ->> 'id' AS vpc_id,  
@@ -98,34 +92,35 @@ to-know-steampipe-a-new-way-to-talk-to-aws-e946708017b4)
       terraform_resource  
     WHERE  
       type = 'aws_vpc';" --output csv > tf_output.csv
-
-  * Fetch the data of the cloud resource:
-
     
+    ```
+    * Extract cloud resources metadata:
+    ```cmd
+      steampipe query "  
+      SELECT  
+        vpc_id,  
+        arn,  
+        cidr_block,  
+        dhcp_options_id,  
+        instance_tenancy,  
+        owner_id,  
+        tags  
+      FROM  
+        aws_morocco.aws_vpc  
+      WHERE is_default = false;" --output csv > aws_output.csv
     
-    steampipe query "  
-    SELECT  
-      vpc_id,  
-      arn,  
-      cidr_block,  
-      dhcp_options_id,  
-      instance_tenancy,  
-      owner_id,  
-      tags  
-    FROM  
-      aws_morocco.aws_vpc  
-    WHERE is_default = false;" --output csv > aws_output.csv
+    ```
 
   * Compare the saved outputs :
-
     
-    
+    ```cmd
     diff -i -w aws_output.csv tf_output.csv
+    ```
 
   * You can automate everything in one script (here in bash):
 
     
-    
+  ```bash
     #!/bin/bash  
       
     # 1. Fetch data from AWS plugin  
@@ -141,9 +136,7 @@ to-know-steampipe-a-new-way-to-talk-to-aws-e946708017b4)
     FROM  
       aws_morocco.aws_vpc  
     WHERE is_default = false;" --output csv > aws_output.csv  
-      
-      
-    # 2. Fetch data from Terraform state  
+ 
     steampipe query "  
     SELECT  
       attributes_std ->> 'id' AS vpc_id,  
@@ -157,7 +150,9 @@ to-know-steampipe-a-new-way-to-talk-to-aws-e946708017b4)
       terraform_resource  
     WHERE  
       type = 'aws_vpc';" --output csv > tf_output.csv  
-      
+  
+  ```
+  ```bash 
     # 3. Compare the two CSV files using diff  
     diff -i -w aws_output.csv tf_output.csv > differences.txt  
       
@@ -168,9 +163,11 @@ to-know-steampipe-a-new-way-to-talk-to-aws-e946708017b4)
         echo "No differences found!"  
         rm differences.txt  
     fi  
-      
+  ```
+  ```bash    
     # Clean up  
-    rm aws_output.csv tf_output.csv
+    rm aws_output.csv tf_output.csv  
+  ```
 
 This approach essentially compares the Terraform state files with the actual
 cloud resources, eliminating the need for manual Terraform plans or resource
@@ -188,16 +185,28 @@ further extending support to a broader range of resources, cloud providers,
 and SaaS platforms, akin to Driftctl’s initial objectives.
 
 [aws-morocco-samples/setting-steampipe-for-drift-detection at main ·
-Z4ck404/aws-morocco-samples](https://github.com/Z4ck404/aws-morocco-
-samples/tree/main/setting-steampipe-for-drift-detection)
+Z4ck404/aws-morocco-samples](https://github.com/Z4ck404/aws-morocco-samples/tree/main/setting-steampipe-for-drift-detection)
 
-![](/assets/images/medium/stat?event=post.clientViewed&referrerSource=full_rss&postId=4cc4536f6cb5)
 
 * * *
 
 [Exploring Steampipe for Terraform Drift
-Detection](https://awsmorocco.com/exploring-steampipe-for-terraform-drift-
-detection-4cc4536f6cb5) was originally published in [AWS
+Detection](https://awsmorocco.com/exploring-steampipe-for-terraform-drift-detection-4cc4536f6cb5) was originally published in [AWS
 Morocco](https://awsmorocco.com) on Medium, where people are continuing the
 conversation by highlighting and responding to this story.
 
+
+{{< notice "Disclaimer for awsmorocco.com" >}}
+
+
+The content, views, and opinions expressed on this blog, awsmorocco.com, are solely those of the authors and contributors and not those of Amazon Web Services (AWS) or its affiliates. This blog is independent and not officially endorsed by, associated with, or sponsored by Amazon Web Services or any of its affiliates.
+
+All trademarks, service marks, trade names, trade dress, product names, and logos appearing on the blog are the property of their respective owners, including in some instances Amazon.com, Inc. or its affiliates. Amazon Web Services®, AWS®, and any related logos are trademarks or registered trademarks of Amazon.com, Inc. or its affiliates.
+
+awsmorocco.com aims to provide informative and insightful commentary, news, and updates about Amazon Web Services and related technologies, tailored for the Moroccan community. However, readers should be aware that this content is not a substitute for direct, professional advice from AWS or a certified AWS professional.
+
+We make every effort to provide timely and accurate information but make no claims, promises, or guarantees about the accuracy, completeness, or adequacy of the information contained in or linked to from this blog.
+
+For official information, please refer to the official Amazon Web Services website or contact AWS directly.
+
+{{< /notice >}}

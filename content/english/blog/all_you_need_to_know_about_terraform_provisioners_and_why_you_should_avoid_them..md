@@ -32,17 +32,32 @@ There are 3 types of provisioners :
 Used to copy files or directories to the newly created resources and
 underneath it’s using ssh or winrm. Does the job of an scp.
 
-In this [article](https://awstip.com/i-deployed-my-static-website-with-
-kubernetes-on-azure-using-terraform-because-why-not-2cdfe8807ca4) I used this
-provisioner inside a null resource to copy my kubernetes configuration files
+In this [article](https://awstip.com/i-deployed-my-static-website-with-kubernetes-on-azure-using-terraform-because-why-not-2cdfe8807ca4) I used this provisioner inside a null resource to copy my kubernetes configuration files
 to a newly created VM where I installed minikube. You can define it inside the
 vm resources as well but i prefer to use them in a separate module as they
 shouldn't be mixed with the resources objects. And this is how I did it :
 
-<https://medium.com/media/bcf1a10ce5b77ae8377ca50bc4b9ef39/href>
+```HCL
+resource "null_resource" "configure-vm" {
 
-**Note that** you will need to add the ssh connection details since it’s using
-it behind the scenes.
+  connection {
+      type = "ssh"
+      user = var.username
+      host = var.ip_address
+      private_key = var.tls_private_key
+    }
+
+  ## Copy files to VM :
+  provisioner "file" {
+    source = "/Users/zakariaelbazi/Documents/GitHub/zackk8s/kubernetes"
+    destination = "/home/${var.username}"
+  }
+
+}
+```
+{{< notice "note" >}}
+you will need to add the ssh connection details since it’s using it behind the scenes.
+{{< /notice >}}
 
 #### remote-exec Provisioner:
 
@@ -54,19 +69,60 @@ be invoked once the resource is created, or it can be used inside a null
 resource which is my prefered approche as it separates this non terraform
 behavior from the real terraform behavior.
 
-<https://medium.com/media/47dd8e18232805592d498c79e67bc679/href>
+```HCL
+resource "null_resource" "configure-vm" {
 
-> **Note that** you can not pass any arguments to the script or command, so
-> the best way is to use file provisioner to copy the files to the resources
-> and then invoke them with the remote-exec provisioner like I did above for
-> my script that installs minikube on the azure-vm.
+  connection {
+      type = "ssh"
+      user = var.username
+      host = var.ip_address
+      private_key = var.tls_private_key
+    }
 
-> **An other thing** to pay attention to is that by default, provisioners that
-> fail will also cause the Terraform apply to fail. To avoid that, the
-> [**on_failure**](https://www.terraform.io/language/resources/provisioners/syntax#failure-
-> behavior)**** can be used.
+  ## Copy files to VM :
+  provisioner "file" {
+    source = "/Users/zakariaelbazi/Documents/GitHub/zackk8s/kubernetes"
+    destination = "/home/${var.username}"
+  }
 
-<https://medium.com/media/6417741b0dd6ce5a5b53a58fab23d042/href>
+  ## install & start minikube
+  provisioner "remote-exec" {
+    inline = [
+      "sudo chmod +x /home/${var.username}/kubernetes/install_minikube.sh",
+      "sh /home/${var.username}/kubernetes/install_minikube.sh",
+      "./minikube start --driver=docker"
+    ]
+  }
+}
+```
+{{< notice "note" >}}
+you can not pass any arguments to the script or command, so
+the best way is to use file provisioner to copy the files to the resources
+and then invoke them with the remote-exec provisioner like I did above for
+my script that installs minikube on the azure-vm.
+{{< /notice >}}
+
+{{< notice " another note" >}}
+to pay attention to is that by default, provisioners that fail will also cause the Terraform apply to fail. To avoid that, the
+[**on_failure**](https://www.terraform.io/language/resources/provisioners/syntax#failure-behavior)**** can be used.
+{{< /notice >}}
+
+```HCL
+resource "null_resource" "configure-vm" {
+    .........
+    ..........
+ 
+  provisioner "remote-exec" {
+    inline = [
+      "sudo chmod +x /home/${var.username}/kubernetes/install_minikube.sh",
+      "sh /home/${var.username}/kubernetes/install_minikube.sh",
+      "./minikube start --driver=docker"
+    ]
+    on_failure = continue #or fail
+   
+  }
+}
+```
 
 In this example, I am using **inline** which is a series of command, the
 on_failure will apply only to the final command in the list !
@@ -77,7 +133,36 @@ Technically this one is very similar to the one before in terms of behavior or
 use but it works in the local machine ruining Terraform. It invokes a script
 or a command on local once the resource it’s declared in is created.
 
-<https://medium.com/media/920825d50aded45dfa78ba7fbe9efccb/href>
+```HCL
+## from HashiCorp docs
+resource "null_resource" "example1" {  
+  provisioner "local-exec" {    
+    command = "open WFH, '>completed.txt' and print WFH scalar localtime"    
+    interpreter = ["perl", "-e"]  
+    }
+ }
+
+ resource "null_resource" "example2" {
+  provisioner "local-exec" {
+    command = "Get-Date > completed.txt"
+    interpreter = ["PowerShell", "-Command"]
+  }
+}
+
+resource "aws_instance" "web" {
+  # ...
+
+  provisioner "local-exec" {
+    command = "echo $FOO $BAR $BAZ >> env_vars.txt"
+
+    environment = {
+      FOO = "bar"
+      BAR = 1
+      BAZ = "true"
+    }
+  }
+}
+```
 
 It’s the only provisioner that doesn’t need any ssh or winrm connection
 details as it runs locally.
@@ -106,8 +191,23 @@ EL BAZI.](https://www.credly.com/badges/34394920-8cdf-47f8-a190-52ab447e3e0f)
 * * *
 
 [All you need to know about Terraform provisioners and why you should avoid
-them.](https://awsmorocco.com/all-you-need-to-know-about-terraform-
-provisioners-and-why-you-should-avoid-them-22b5ef8d2db2) was originally
+them.](https://awsmorocco.com/all-you-need-to-know-about-terraform-provisioners-and-why-you-should-avoid-them-22b5ef8d2db2) was originally
 published in [AWS Morocco](https://awsmorocco.com) on Medium, where people are
 continuing the conversation by highlighting and responding to this story.
+
+
+{{< notice "Disclaimer for awsmorocco.com" >}}
+
+
+The content, views, and opinions expressed on this blog, awsmorocco.com, are solely those of the authors and contributors and not those of Amazon Web Services (AWS) or its affiliates. This blog is independent and not officially endorsed by, associated with, or sponsored by Amazon Web Services or any of its affiliates.
+
+All trademarks, service marks, trade names, trade dress, product names, and logos appearing on the blog are the property of their respective owners, including in some instances Amazon.com, Inc. or its affiliates. Amazon Web Services®, AWS®, and any related logos are trademarks or registered trademarks of Amazon.com, Inc. or its affiliates.
+
+awsmorocco.com aims to provide informative and insightful commentary, news, and updates about Amazon Web Services and related technologies, tailored for the Moroccan community. However, readers should be aware that this content is not a substitute for direct, professional advice from AWS or a certified AWS professional.
+
+We make every effort to provide timely and accurate information but make no claims, promises, or guarantees about the accuracy, completeness, or adequacy of the information contained in or linked to from this blog.
+
+For official information, please refer to the official Amazon Web Services website or contact AWS directly.
+
+{{< /notice >}}
 
