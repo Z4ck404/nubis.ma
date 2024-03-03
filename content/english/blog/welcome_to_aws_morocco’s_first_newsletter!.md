@@ -2,13 +2,11 @@
 ---
 title: "Welcome to AWS Morocco’s first newsletter!"
 image: "/images/medium/1*xOrKvc_VTuI7V2S5zZkXxg.png"
-categories: ["AWS", "Terraform"]
+categories: ["AWS", "Terraform","Announcements"]
 tags: ["AWS", "Terraform"]
 date: 2024-02-29T14:48:08Z
-author: "Unknown Author"
+author: "awsmorocco"
 ---
-
-![](/assets/images/medium/1*xOrKvc_VTuI7V2S5zZkXxg.png)Zakaria x DALL-E 3
 
 Dear AWS Enthusiasts,
 
@@ -27,12 +25,9 @@ cloud computing
 
 Warm regards, The AWS Morocco Team
 
-![](/assets/images/medium/stat?event=post.clientViewed&referrerSource=full_rss&postId=1ef6bea8e37c)
-
 * * *
 
-[Welcome to AWS Morocco’s first newsletter!](https://awsmorocco.com/welcome-
-to-the-inaugural-aws-morocco-newsletter-1ef6bea8e37c) was originally published
+[Welcome to AWS Morocco’s first newsletter!](https://awsmorocco.com/welcome-to-the-inaugural-aws-morocco-newsletter-1ef6bea8e37c) was originally published
 in [AWS Morocco](https://awsmorocco.com) on Medium, where people are
 continuing the conversation by highlighting and responding to this story.
 
