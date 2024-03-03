@@ -1,8 +1,7 @@
 
 ---
 title: "CSI Drivers (EBS, EFS, S3) on EKS And How To Use Them"
-image: "/images/medium/1*xOrKvc_VTuI7V2S5zZkXxg.png"
-image: "/images/assets/medium/1*xOrKvc_VTuI7V2S5zZkXxg.png"
+image: "/images/medium/0*_WvCpAlKQZOfRg0m.png"
 categories: ["AWS", "Terraform"]
 tags: ["AWS", "Terraform"]
 date: 2024-02-29T14:48:03Z
@@ -21,10 +20,6 @@ details of CSI drivers on Amazon EKS and explore how to install and use them
 seamlessly with file systems.
 
 #### Understanding CSI Drivers:
-
-![](/assets/images/medium/0*953JJ655M6dcjEQG.png)[Container Storage Interface
-(CSI) for Kubernetes GA](https://kubernetes.io/blog/2019/01/15/container-
-storage-interface-ga/)
 
 CSI is a standardized interface that allows storage vendors to develop plugins
 that can be used across various container orchestration platforms. With EKS,
@@ -59,7 +54,7 @@ ebs csi driver on an eks cluster](https://github.com/Z4ck404/terraform-aws-
 eks-ebs-csi-driver)
 
     
-    
+```HCL 
     module "eks-ebs-csi-driver" {  
       source           = "Z4ck404/eks-ebs-csi-driver/aws"  
       version          = "0.1.0"  
@@ -68,6 +63,7 @@ eks-ebs-csi-driver)
       aws_region       = "us-west-1"  
       eks_cluster_name = "zack-eks"  
     }
+```
 
 **3 — Usage:**
 
@@ -75,7 +71,7 @@ Create a storage class that provisions volumes using the EBS driver, then
 define a PVC to be used by your workloads.
 
     
-    
+```yml  
     kind: StorageClass  
     apiVersion: storage.k8s.io/v1  
     metadata:  
@@ -93,6 +89,7 @@ define a PVC to be used by your workloads.
      resources:  
        requests:  
          storage: 5Gi
+```
 
 #### Amazon EFS CSI Driver
 
@@ -113,7 +110,7 @@ Create a storage class that provisions volumes using the efs driver, then
 define a PVC to be used by your workloads.
 
     
-    
+```yml   
     kind: StorageClass  
     apiVersion: storage.k8s.io/v1  
     metadata:  
@@ -131,7 +128,7 @@ define a PVC to be used by your workloads.
       resources:  
         requests:  
           storage: 5Gi
-
+```
 #### S3 CSI Driver (mounting S3 as a filesystem):
 
 **1 — Overview:**  
@@ -154,7 +151,7 @@ s3 csi driver on an eks cluster and mount s3 as
 volume](https://github.com/Z4ck404/terraform-aws-eks-s3-csi-driver)
 
     
-    
+```HCL  
     module "eks-s3-csi-driver" {  
       source  = "Z4ck404/eks-s3-csi-driver/aws"  
       
@@ -164,15 +161,14 @@ volume](https://github.com/Z4ck404/terraform-aws-eks-s3-csi-driver)
       
       s3_bucket_name = "zack-s3-mount--usw2-az1--x-s3"  
     }
-
+```
 **3 — Usage:**
 
 You can have a look into the examples in the official repository of the
-[mountpoint-s3-csi-driver](https://github.com/awslabs/mountpoint-s3-csi-
-driver). Static provisioning can be achieved as follows:
+[mountpoint-s3-csi-driver](https://github.com/awslabs/mountpoint-s3-csi-driver). Static provisioning can be achieved as follows:
 
     
-    
+```yml  
     apiVersion: v1  
     kind: PersistentVolume  
     metadata:  
@@ -221,6 +217,7 @@ driver). Static provisioning can be achieved as follows:
         - name: persistent-storage  
           persistentVolumeClaim:  
             claimName: s3-claim
+```
 
 #### Conclusion:
 
@@ -229,17 +226,12 @@ on Amazon EKS, addressing different storage needs, from block storage with EBS
 to file storage with EFS and even object storage with S3. There is also an
 Amazon FSx for Lustre CSI driver for FSx for Lustre.  
 Third-party CSI drivers exist to support other file systems available on AWS
-such as [NetApp Trident](https://docs.netapp.com/fr-fr/trident-2107/trident-
-concepts/intro.html) which allow [FSxONTAP
-](https://aws.amazon.com/fsx/netapp-ontap/)to be used.
-
-![](/assets/images/medium/stat?event=post.clientViewed&referrerSource=full_rss&postId=0aa369ec1c03)
+such as [NetApp Trident](https://docs.netapp.com/fr-fr/trident-2107/trident-concepts/intro.html) which allow [FSxONTAP](https://aws.amazon.com/fsx/netapp-ontap/)to be used.
 
 * * *
 
-[CSI Drivers (EBS, EFS, S3) on EKS And How To Use
-Them](https://awsmorocco.com/csi-drivers-ebs-efs-s3-on-eks-and-how-to-use-
-them-0aa369ec1c03) was originally published in [AWS
-Morocco](https://awsmorocco.com) on Medium, where people are continuing the
-conversation by highlighting and responding to this story.
+> [CSI Drivers (EBS, EFS, S3) on EKS And How To Use
+> Them](https://awsmorocco.com/csi-drivers-ebs-efs-s3-on-eks-and-how-to-use-them-0aa369ec1c03) was originally published in [AWS
+> Morocco](https://awsmorocco.com) on Medium, where people are continuing the
+> conversation by highlighting and responding to this story.
 
