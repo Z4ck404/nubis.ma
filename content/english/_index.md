@@ -2,8 +2,8 @@
 # Banner
 banner:
   title: "AWS Morocco Community"
-  content: "AWS Morocco 🇲🇦 News, community and updates (not official)"
-  image: "/images/banner.png"
+  content: "AWS Morocco 🇲🇦 News, community and updates (Not official)"
+  image: "/images/background.png"
   button:
     enable: true
     label: "Check the blog"
@@ -12,7 +12,7 @@ banner:
 # Features
 features:
   - title: "Welcome to our corner on the web where we dive into all things Amazon Web Services (AWS) with a Moroccan twist."
-    image: "/images/service-3.png"
+    image: "/images/index_background_1.png"
     content: "This blog began with a simple goal: explore AWS, understand how it's shaping digital Morocco, and share what we learn along the way."
     bulletpoints:
       - "Articles breaking down AWS tech."
