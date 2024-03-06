@@ -56,8 +56,8 @@ show_categories = true
 # seo meta data for OpenGraph / Twitter Card
 # seo module: https://github.com/gethugothemes/hugo-modules/tree/master/seo-tools/basic-seo
 [metadata]
-keywords = ["aws", "morocco"]
-description = "Aws morocco blog"
+keywords = ["aws", "morocco","nubis"]
+description = "Nubis Morocco: Aws morocco community"
 author = "awsmorocco.com"
 image = "images/og-image.png"
 
