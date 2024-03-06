@@ -32,7 +32,7 @@ copyright = "Theme from [Zeon Studio](https://zeon.studio)"
 # Preloader
 # preloader module: https://github.com/gethugothemes/hugo-modules/tree/master/components/preloader
 [preloader]
-enable = true
+enable = false
 preloader = "" # use jpg, png, svg or gif format.
 
 # Navigation button
@@ -82,16 +82,6 @@ button = "I Accept"
 ######################## sidebar widgets #########################
 [widgets]
 sidebar = ["categories", "tags"]
-
-
-# google map
-[google_map]
-enable = false
-map_api_key = "AIzaSyCcABaamniA6OL5YvYSpB3pFMNrXwXnLwU"
-map_latitude = "51.5223477"
-map_longitude = "-0.1622023"
-map_marker = "images/marker.png"
-
 
 # Subscription
 [subscription]
